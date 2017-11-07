@@ -1,16 +1,16 @@
-import requests
-import time
-import sys
-from urllib.parse import urlencode
-import re
-from datetime import datetime
+import json
 import os
+import re
+import ssl
+import sys
+import time
+from datetime import datetime
+from urllib.parse import urlencode, urljoin
+
 import bs4
-from urllib.parse import urljoin
+import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.ssl_ import create_urllib3_context
-import ssl
-import json
 
 requests.packages.urllib3.disable_warnings()
 
@@ -88,7 +88,8 @@ class Portal(Session):
 
         data["__EVENTTARGET"] = "ctl00$ContentSection$lnkEntrar"
         if not user or not password:
-            data["__EVENTTARGET"] = "ctl00$ContentSection$lnkEntrarSinIdentificar"
+            data[
+                "__EVENTTARGET"] = "ctl00$ContentSection$lnkEntrarSinIdentificar"
 
         self.post(url, data=data)
 
@@ -98,7 +99,7 @@ class Portal(Session):
             error = re.sub(r"\s*\n\s*", r"\n", error)
             error = error.strip()
             raise Exception(error)
-            
+
         ops = self.get_soup().select("#ContentSection_hdnOperaciones")
         value = ops[0].attrs["value"]
         self.operaciones = json.loads(value)
@@ -134,7 +135,8 @@ class Portal(Session):
         ops = [o for o in self.centros if o["CodCentro"] == codigo][0]
         url, data = self.get_form()
         data["__EVENTTARGET"] = "Continuar"
-        data["__EVENTARGUMENT"] = str(codigo) + ";" + ops["NomCentro"].replace(" ", "+")
+        data["__EVENTARGUMENT"] = str(codigo) + ";" + ops[
+            "NomCentro"].replace(" ", "+")
         self.post(url, data=data)
 
         ops = self.get_soup().select("#ContentSection_hdnActividades")
@@ -162,4 +164,3 @@ class Portal(Session):
                     hora = l.attrs["onclick"].split("'")[5]
                     libre.add(fch + " " + hora)
         return sorted(libre)
-

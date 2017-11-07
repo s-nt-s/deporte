@@ -1,26 +1,32 @@
-from api import Portal, DESAdapter
 import os
+
 from jinja2 import Environment, FileSystemLoader
+
+from api import DESAdapter, Portal
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
+
 def in_range(fch):
     f, hm = fch.split(" ")
-    h, m  = hm.split(":")
-    tm = int(h) + (int(m)/100)
+    h, m = hm.split(":")
+    tm = int(h) + (int(m) / 100)
     return tm >= 15.5
+
 
 def get_paul():
     userpass = open(".userpass").read().strip()
     user, password = userpass.split(" ")
-    p = Portal("https://gestiona.madrid.org/cronosweb", user=user, password=password)
+    p = Portal("https://gestiona.madrid.org/cronosweb",
+               user=user, password=password)
     p.operacion('01010000')
     p.centro(4)
     p.actividad(7)
     libre = [f for f in p.fechas() if in_range(f)]
     return libre
+
 
 def get_mina():
     p = Portal(
@@ -40,4 +46,3 @@ html = out.render(paul=paul, mina=mina)
 print (html)
 with open("out.html", "wb") as fh:
     fh.write(bytes(html, 'UTF-8'))
-

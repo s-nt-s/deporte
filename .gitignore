@@ -1,2 +1,3 @@
 .userpass
 *.pyc
+__pycache__
