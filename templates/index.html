@@ -4,6 +4,12 @@
 		<meta charset="utf-8" /> 
 		<title>Deporte</title>
 		<link href="main.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" type="text/javascript">
+        //<![CDATA[
+            var next_run = "{{ data.cron.next_date }}";
+        //]]>
+        </script>
+        <script src="main.js" async="async" type="text/javascript"></script>
 	</head>
 	<body>
 		<p>Última actualización: {{ data.now }}</p>
@@ -49,7 +55,7 @@
         <p><b>Código fuente</b>: <a href='https://github.com/s-nt-s/deporte'>GitHub</a></p>
         <p>
             Esta página se regenera {{ data.cron.summary }}.<br/>
-            La próxima ejecución será el {{ data.cron.next }}.
+            La próxima ejecución será el {{ data.cron.next }}.<br/>
         </p>
 	</body>
 </html>

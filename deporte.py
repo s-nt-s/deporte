@@ -165,10 +165,10 @@ def get_cron():
     summary = ", ".join(comments[:-1])
     if len(comments) > 1:
         summary += " y " + comments[-1]
-    r = {
-        "summary": summary,
-        "next": next_run.strftime("%A %d a las %H:%M").replace(" 0", " ") if next_run else None
-    }
+    r = {"summary": summary}
+    if next_run:
+        r["next"] = next_run.strftime("%A %d a las %H:%M").replace(" 0", " ")
+        r["next_date"] = next_run.strftime("%Y-%m-%d-%H-%M")
     return r
 
 paul = get_paul()
