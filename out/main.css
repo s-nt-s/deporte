@@ -6,12 +6,28 @@ body > ul {
     list-style: none;
     padding: 0px;
 }
-ul.sad > li:before {
+ul.sad > li::before {
 	content: "\1F615";
 	margin: 0 0.5em;
 }
 
-ul.happy > li:before {
+ul.happy > li::before {
 	content: "\1F60A";
+	margin: 0 0.5em;
+}
+
+
+li.heavy_wind::after {
+	content: "\1F300";
+	margin: 0 0.5em;
+}
+
+li.soft_rain::after {
+	content: "\2602";
+	margin: 0 0.5em;
+}
+
+li.heavy_rain::after {
+	content: "\26C8";
 	margin: 0 0.5em;
 }

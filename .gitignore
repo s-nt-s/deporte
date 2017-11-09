@@ -1,4 +1,4 @@
-.userpass
+.ig_*
 *.pyc
 __pycache__
 out/*.html

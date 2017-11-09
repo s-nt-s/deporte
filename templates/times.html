@@ -4,7 +4,12 @@
 	<li><span class='day'>{{ r.caption }}</span>:
 		<ul>
 		{% for h in r.hours %}
-			<li>{{ h }}</li>
+			<li class='{{ h.class }}'>
+                {{ h.hour }}
+                {% if h.rooms>0 %}
+                    ({{ h.rooms }} salas)
+                {% endif %}
+            </li>
 		{% endfor %}
 		</ul>
 	</li>
