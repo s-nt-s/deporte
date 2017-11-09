@@ -7,7 +7,7 @@ body > ul {
     padding: 0px;
 }
 ul.sad > li::before {
-	content: "\1F615";
+	content: "\2639";
 	margin: 0 0.5em;
 }
 
