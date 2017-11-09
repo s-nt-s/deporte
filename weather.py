@@ -2,6 +2,7 @@ import xml.etree.ElementTree as etree
 
 import requests
 
+
 class Weather():
 
     def __init__(self, url):

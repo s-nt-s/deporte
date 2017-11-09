@@ -12,9 +12,8 @@ import requests
 from jinja2 import Environment, FileSystemLoader
 
 import holidays
-from crontab import CronTab
-
 from api import DESAdapter, Portal
+from crontab import CronTab
 from weather import WeatherMadrid
 
 abspath = os.path.abspath(__file__)
@@ -151,6 +150,7 @@ def build_times(free, set_weather=False):
         })
     return times
 
+
 def get_cron():
     cron = CronTab(user=True)
     comments = []
@@ -160,11 +160,11 @@ def get_cron():
             comments.append(job.comment.lower())
             schedule = job.schedule(date_from=datetime.now())
             dt = schedule.get_next()
-            if next_run is None or next_run>dt:
+            if next_run is None or next_run > dt:
                 next_run = dt
     summary = ", ".join(comments[:-1])
-    if len(comments)>1:
-        summary += " y "+comments[-1]
+    if len(comments) > 1:
+        summary += " y " + comments[-1]
     r = {
         "summary": summary,
         "next": next_run.strftime("%A %d a las %H:%M").replace(" 0", " ") if next_run else None
