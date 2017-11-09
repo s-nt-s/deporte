@@ -1,0 +1,15 @@
+<ul class="{{'sad' if not array }} {{ 'happy' if array }}">
+{% if array %}
+{% for r in array %}
+	<li><span class='day'>{{ r.caption }}</span>:
+		<ul>
+		{% for h in r.hours %}
+			<li>{{ h }}</li>
+		{% endfor %}
+		</ul>
+	</li>
+{% endfor %}
+{% else %}
+	<li>¡No hay nada libre!</li>
+{% endif %}
+</ul>

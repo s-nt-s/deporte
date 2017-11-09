@@ -1,0 +1,17 @@
+body {
+    font-family: Verdana,sans-serif;
+    /*font-size: 75%;*/
+}
+body > ul {
+    list-style: none;
+    padding: 0px;
+}
+ul.sad > li:before {
+	content: "\1F615";
+	margin: 0 0.5em;
+}
+
+ul.happy > li:before {
+	content: "\1F60A";
+	margin: 0 0.5em;
+}
