@@ -17,7 +17,7 @@ ul.happy > li::before {
 }
 
 
-li.heavy_wind::after {
+li.wind::after {
 	content: "\1F300";
 	margin: 0 0.5em;
 }

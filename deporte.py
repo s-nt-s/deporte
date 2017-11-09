@@ -93,20 +93,18 @@ def get_class(w_day_hour):
     cls = ""
     if w_day_hour:
         return ""
-        if w_day_hour.get("prob_precipitacion", 0) > 50:
+        if w_day_hour.get("prob_precipitacion", 0) >= 70:
             cls += " heavy_rain"
-        elif w_day_hour.get("prob_precipitacion", 0) > 5:
+        elif w_day_hour.get("prob_precipitacion", 0) >= 50:
             cls += " soft_rain"
 
-        if w_day_hour.get("viento", 0) > 20:
-            cls += " heavy_wind"
-        elif w_day_hour.get("viento", 0) > 5:
-            cls += " soft_wind"
+        if w_day_hour.get("viento", 0) > 15:
+            cls += " wind"
 
-        if w_day_hour.get("sens_termica", 0) > 30:
-            cls += " heavy_hot"
-        elif w_day_hour.get("sens_termica", 0) < 20:
-            cls += " heavy_cold"
+        if w_day_hour.get("sens_termica", 0) >= 30:
+            cls += " hot"
+        elif w_day_hour.get("sens_termica", 0) <= 16:
+            cls += " cold"
     if len(cls) > 1:
         cls = "weather " + cls
     return cls.strip()
