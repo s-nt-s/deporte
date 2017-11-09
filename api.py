@@ -151,7 +151,7 @@ class Portal(Session):
         self.post(url, data=data)
 
     def fechas(self):
-        libre = set()
+        libre = []
         url, data = self.get_form()
         data["__EVENTTARGET"] = "Continuar"
         for f in self.get_soup().select("#ContentSection_divListaFechas a"):
@@ -162,5 +162,5 @@ class Portal(Session):
             for l in self.get_soup().select("td img"):
                 if l.attrs.get("estado", None) == "Libre":
                     hora = l.attrs["onclick"].split("'")[5]
-                    libre.add(fch + " " + hora)
+                    libre.append(fch + " " + hora)
         return sorted(libre)

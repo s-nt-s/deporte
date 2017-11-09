@@ -1,3 +1,4 @@
 .userpass
 *.pyc
 __pycache__
+out/*.html
