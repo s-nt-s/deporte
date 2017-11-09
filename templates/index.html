@@ -6,7 +6,8 @@
 		<link href="main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" type="text/javascript">
         //<![CDATA[
-            var next_run = "{{ data.cron.next_date }}";
+            var last_run = "{{ data.now_js }}";
+            var next_run = "{{ data.cron.next_js }}";
         //]]>
         </script>
         <script src="main.js" async="async" type="text/javascript"></script>

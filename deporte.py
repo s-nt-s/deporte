@@ -168,7 +168,7 @@ def get_cron():
     r = {"summary": summary}
     if next_run:
         r["next"] = next_run.strftime("%A %d a las %H:%M").replace(" 0", " ")
-        r["next_date"] = next_run.strftime("%Y-%m-%d-%H-%M")
+        r["next_js"] = next_run.strftime("%Y-%m-%d-%H-%M")
     return r
 
 paul = get_paul()
@@ -177,6 +177,7 @@ mina = get_mina()
 j2_env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
 out = j2_env.get_template('index.html')
 html = out.render(data={
+    "now_js": now.strftime("%Y-%m-%d-%H-%M"),
     "now": now.strftime("%A %d a las %H:%M").replace(" 0", " "),
     "mina": build_times(mina, set_weather=True),
     "paul": build_times(paul, set_weather=False),
