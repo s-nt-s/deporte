@@ -2,11 +2,11 @@
 {% if array %}
 {% for r in array %}
 	<li><span class='day'>{{ r.caption }}</span>:
-		<ul>
+		<ul class="h{{ r.max_width }}">
 		{% for h in r.hours %}
-			<li class='{{ h.class }}'>
+			<li class='{{ h.class }} h{{ h.width }}'>
                 {{ h.hour }}
-                {% if h.rooms>0 %}
+                {% if h.rooms>1 %}
                     ({{ h.rooms }} salas)
                 {% endif %}
             </li>

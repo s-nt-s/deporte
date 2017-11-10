@@ -22,7 +22,8 @@ os.chdir(dname)
 
 locale.setlocale(locale.LC_TIME, "es_ES.utf8")
 
-H_MIN = 15.3
+H_MIN_F = 10.0
+H_MIN_L = 15.3
 H_MAX = 20.0
 
 W_MIN = 2
@@ -39,16 +40,14 @@ def in_range(fch):
     dt = datetime.strptime(fch, '%Y-%m-%d %H:%M')
     if dt < now:
         return False
-    if dt in holi:
-        return True
-    w = dt.isoweekday()
-    if w in (6, 7):
-        return True
-    # if w < W_MIN or w > W_MAX:
-    #    return False
     h, m = fch.split(" ")[1].split(":")
     tm = int(h) + (int(m) / 100)
-    return tm >= H_MIN and tm <= H_MAX
+    if tm > H_MAX:
+        return False
+    w = dt.isoweekday()
+    if w in (6, 7) or dt in holi:
+        return tm >= H_MIN_F
+    return tm >= H_MIN_L
 
 
 def to_hh_mm(time):
@@ -118,12 +117,15 @@ def get_week_day(d):
 def to_pm(hm, short=False):
     h, m = hm.split(":")
     h = int(h)
-    if h < 13:
-        return hm
-    h = h - 12
-    if short and m == "00":
-        return str(h) + " pm"
-    return "%s:%s pm" % (h, m)
+    pm = h > 12
+    if pm:
+        h = h - 12
+    rs = str(h)
+    if not short or m != "00":
+        rs += ":" + m
+    if pm:
+        return rs+" pm"
+    return rs
 
 
 def build_times(free, set_weather=False):
@@ -133,18 +135,24 @@ def build_times(free, set_weather=False):
     for d in days:
         hours = [f[1] for f in splt if f[0] == d]
         hours_salas = []
+        max_width = 0
         for h in sorted(set(hours)):
             w_day_hour = weather.day_hour(d, h) if set_weather else None
+            hm = to_pm(h)
+            width = len(hm.split(":")[0])
             hours_salas.append({
-                "hour": to_pm(h),
+                "hour": hm,
                 "weather": w_day_hour,
                 "rooms": hours.count(h),
-                "class": get_class(w_day_hour)
+                "class": get_class(w_day_hour),
+                "width": width
             })
+            max_width = max(width, max_width)
         times.append({
             "day": d,
             "hours": hours_salas,
-            "caption": get_week_day(d)
+            "caption": get_week_day(d),
+            "max_width": max_width
         })
     return times
 
@@ -163,10 +171,10 @@ def get_cron():
     summary = ", ".join(comments[:-1])
     if len(comments) > 1:
         summary += " y " + comments[-1]
-    r = {"summary": summary}
-    if next_run:
-        r["next"] = next_run.strftime("%A %d a las %H:%M").replace(" 0", " ")
-        r["next_js"] = next_run.strftime("%Y-%m-%d-%H-%M")
+    r = {
+        "summary": summary,
+        "next": next_run
+    }
     return r
 
 paul = get_paul()
@@ -175,11 +183,11 @@ mina = get_mina()
 j2_env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
 out = j2_env.get_template('index.html')
 html = out.render(data={
-    "now_js": now.strftime("%Y-%m-%d-%H-%M"),
-    "now": now.strftime("%A %d a las %H:%M").replace(" 0", " "),
+    "now": now,
     "mina": build_times(mina, set_weather=True),
     "paul": build_times(paul, set_weather=False),
-    "h_min": to_pm(to_hh_mm(H_MIN), short=True),
+    "h_min_l": to_pm(to_hh_mm(H_MIN_L), short=True),
+    "h_min_f": to_pm(to_hh_mm(H_MIN_F), short=True),
     "h_max": to_pm(to_hh_mm(H_MAX), short=True),
     "w_min": week[W_MIN],
     "w_max": week[W_MAX],

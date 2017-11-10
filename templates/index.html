@@ -6,14 +6,14 @@
 		<link href="main.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript" type="text/javascript">
         //<![CDATA[
-            var last_run = "{{ data.now_js }}";
-            var next_run = "{{ data.cron.next_js }}";
+            var last_run = '{{ data.now.strftime("%Y-%m-%d-%H-%M") }}';
+            var next_run = '{{ data.cron.next.strftime("%Y-%m-%d-%H-%M") }}';
         //]]>
         </script>
         <script src="main.js" async="async" type="text/javascript"></script>
 	</head>
 	<body>
-		<p>Última actualización: {{ data.now }}</p>
+		<p>Última actualización: {{ data.now.strftime("%A %d a las %H:%M").replace(" 0", " ") }}</p>
 
 		<p>
 			<b>Squash</b> 
@@ -31,32 +31,34 @@
 		{% include "times.html" %}
 		{% endwith %}
 
-		<p><b>(*)</b> En días laborables solo se muestran los horarios entre las {{ data.h_min }} y las {{ data.h_max }}</p>
+		<p>
+            <b>(*)</b> Solo se muestran los horarios entre las {{ data.h_min_f }}, en festivos, o las {{ data.h_min_l }}, en laborales, y las {{ data.h_max }}.
+        </p>
 
         <hr/>
         
         <p>
             <b>Squash</b>: <a href='https://www.google.es/maps/place/Calle+del+Pelicano,+4,+28025+Madrid'>Calle del Pelicano 4</a><br/>
-            8€ cada 45min. Contacto: <a href="tel:+34914697404">91 469 74 04</a> / <a href='mailto:sanvicente.paul@madrid.org'>sanvicente.paul@madrid.org</a>
+            8€ cada 45min.<br/>
+            Contacto: <a href="tel:+34914697404">91 469 74 04</a> / <a href='mailto:sanvicente.paul@madrid.org'>sanvicente.paul@madrid.org</a>
         </p>
         <p>
             <b>Frontón</b>: <a href='https://www.google.es/maps/place/Calle+de+Monseñor+Oscar+Romero,+41,+28025+Madrid'>Calle de Monseñor Oscar Romero 41</a><br/>
             6,90€ cada hora, si se pide iluminación cuesta 3,70€ más<br/>
             Contacto: <a href="tel:+34914661278">914 661 278</a> / <a href="tel:+34914661732">914 661 732</a>
         </p>
-
-		<p><b>(*)</b> Para detectar los festivos se usa <a href='https://pypi.python.org/pypi/holidays'>holidays</a>, así que puede que se le escape alguna fecha.</p>
-		<p>
-            <b>(*)</b> Los datos meteorologicos son extraidos de la <a href='http://www.aemet.es/es/eltiempo/prediccion/municipios/madrid-id28079'>aemet</a><br/>
-            (esto esta en pruebas, mejor revisar directamente la fuente).
-        </p>
         
         <hr/>
 
         <p><b>Código fuente</b>: <a href='https://github.com/s-nt-s/deporte'>GitHub</a></p>
+		<p>Para detectar los festivos se usa <a href='https://pypi.python.org/pypi/holidays'>holidays</a>, así que puede que se le escape alguna fecha.</p>
+		<p>
+            Los datos meteorologicos son extraidos de la <a href='http://www.aemet.es/es/eltiempo/prediccion/municipios/madrid-id28079'>aemet</a><br/>
+            (esto esta en pruebas, mejor revisar directamente la fuente).
+        </p>
         <p>
             Esta página se regenera {{ data.cron.summary }}.<br/>
-            La próxima ejecución será el {{ data.cron.next }}.<br/>
+            La próxima ejecución será el {{ data.cron.next.strftime("%A %d a las %H:%M").replace(" 0", " ") }}.<br/>
         </p>
 	</body>
 </html>

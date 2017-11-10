@@ -1,6 +1,12 @@
 body {
-    font-family: Verdana,sans-serif;
-    /*font-size: 75%;*/
+    font-family: "Droid Sans Mono","Consolas", Monaco, 'MonacoRegular', 'Courier New', monospace;
+    background: #000000;
+    color: #ffffff;
+    line-height: 1.2em;
+}
+a {
+    color: orange;
+    text-decoration: none;
 }
 body > ul {
     list-style: none;
@@ -31,3 +37,16 @@ li.heavy_rain::after {
 	content: "\26C8";
 	margin: 0 0.5em;
 }
+
+ul.h2 > li.h1 {
+    padding-left: 0.6em;
+}
+
+body > ul > li {
+    margin-bottom: 0.5em;
+}
+
+body > ul > li > ul {
+    margin-top: 0.1em;
+}
+
