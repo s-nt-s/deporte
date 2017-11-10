@@ -12,14 +12,47 @@ body > ul {
     list-style: none;
     padding: 0px;
 }
-ul.sad > li::before {
-	content: "\2639";
+body > ul.icon > li::before {
 	margin: 0 0.5em;
+    display: inline-block;
+    color: Yellow;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: 5s;
+    animation-duration: 5s;
+    animation-name: rotate;
+    -webkit-animation-name: rotate;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    -webkit-animation-iteration-count: 1;
+    position: relative;
+    top: -1px;
+    font-weight: bold;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rotate {
+    to {
+    transform: rotate(90deg);
+    }
+}
+
+/* Standard syntax */
+@keyframes rotate {
+    to {
+    transform: rotate(90deg);
+    }
+}
+
+ul.sad > li::before {
+	/*content: "\2639";*/
+    content: ":(";
 }
 
 ul.happy > li::before {
-	content: "\1F60A";
-	margin: 0 0.5em;
+	/*content: "\1F60A";*/
+    content: ":)";
 }
 
 
