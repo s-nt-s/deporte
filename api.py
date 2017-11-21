@@ -4,6 +4,7 @@ import re
 import ssl
 import sys
 import time
+import unicodedata as uc
 from datetime import datetime
 from urllib.parse import urlencode, urljoin
 
@@ -83,6 +84,10 @@ class Portal(Session):
     def __init__(self, url, user=None, password=None, adapter=None):
         super().__init__(url, adapter=adapter)
         self.root = self.response.url
+        if self.response and self.response.text:
+            text = self.response.text.strip()
+            if not text.startswith("<") and len(text) < 200:
+                raise Exception(text)
 
         url, data = self.get_form(user=user, password=password)
 
@@ -164,3 +169,9 @@ class Portal(Session):
                     hora = l.attrs["onclick"].split("'")[5]
                     libre.append(fch + " " + hora)
         return sorted(libre)
+
+
+def normalize(s):
+    s = ''.join((c for c in uc.normalize('NFD', s) if uc.category(c) != 'Mn'))
+    s = s.replace(" ", "_")
+    return s

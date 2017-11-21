@@ -124,7 +124,7 @@ def to_pm(hm, short=False):
     if not short or m != "00":
         rs += ":" + m
     if pm:
-        return rs+" pm"
+        return rs + " pm"
     return rs
 
 
