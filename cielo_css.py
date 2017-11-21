@@ -16,4 +16,4 @@ with open("out/cielo.css", "w") as f:
         url = urljoin(root, img.attrs["src"])
         title = img.attrs["title"][9:]
         title = normalize(title)
-        f.write('.icon.%s {background-image: url("%s");}\n' % (title, url))
+        f.write('.%s .cielo {background-image: url("%s");}\n' % (title, url))
