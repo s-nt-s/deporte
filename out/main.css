@@ -89,8 +89,8 @@ span.cielo {
     display: inline-block;
     width: 1em;
     height: 1em;
-    vertical-align: top;
-    float: right;
+/*    vertical-align: top;
+*/    float: right;
     margin-left: 0.5em;
 }
 body > ul {

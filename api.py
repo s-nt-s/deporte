@@ -173,5 +173,5 @@ class Portal(Session):
 
 def normalize(s):
     s = ''.join((c for c in uc.normalize('NFD', s) if uc.category(c) != 'Mn'))
-    s = s.replace(" ", "_")
+    s = s.lower().replace(" ", "_")
     return s
