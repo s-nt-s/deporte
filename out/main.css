@@ -83,3 +83,17 @@ body > ul > li > ul {
     margin-top: 0.1em;
 }
 
+span.cielo {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: top;
+    float: right;
+    margin-left: 0.5em;
+}
+body > ul {
+    display: table;
+    table-layout: fixed;
+}
