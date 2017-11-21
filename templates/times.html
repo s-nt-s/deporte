@@ -9,6 +9,9 @@
                 {% if h.rooms>1 %}
                     ({{ h.rooms }} salas)
                 {% endif %}
+                {% if h.cielo %}
+				<span class='cielo' title='{{ h.cielo }}'></span>
+                {% endif %}
             </li>
 		{% endfor %}
 		</ul>
