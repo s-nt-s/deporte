@@ -1,10 +1,10 @@
+import os
 import unicodedata as uc
+from ftplib import FTP
 from urllib.parse import urljoin
 
-from ftplib import FTP
 import bs4
 import requests
-import os
 
 from api import normalize
 

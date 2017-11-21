@@ -104,7 +104,7 @@ def get_class(w_day_hour):
         elif w_day_hour.get("sens_termica", 0) <= 16:
             cls += " cold"
         if w_day_hour.get("estado_cielo_des", None):
-            cls += " "+normalize(w_day_hour["estado_cielo_des"])
+            cls += " " + normalize(w_day_hour["estado_cielo_des"])
     if len(cls) > 1:
         cls = "weather " + cls
     return cls.strip()
