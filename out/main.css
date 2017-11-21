@@ -92,8 +92,13 @@ span.cielo {
 /*    vertical-align: top;
 */    float: right;
     margin-left: 0.5em;
+  position: absolute;
+  left: 100%;
 }
 body > ul {
-    display: table;
-    table-layout: fixed;
+    display: inline-block;
+}
+body > ul li {
+    white-space: nowrap;
+    position: relative;
 }
