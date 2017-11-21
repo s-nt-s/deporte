@@ -12,7 +12,7 @@ import requests
 from jinja2 import Environment, FileSystemLoader
 
 import holidays
-from api import DESAdapter, Portal
+from api import DESAdapter, Portal, normalize
 from crontab import CronTab
 from weather import WeatherMadrid
 
@@ -91,7 +91,6 @@ def get_mina_squash():
 def get_class(w_day_hour):
     cls = ""
     if w_day_hour:
-        return ""
         if w_day_hour.get("prob_precipitacion", 0) >= 70:
             cls += " heavy_rain"
         elif w_day_hour.get("prob_precipitacion", 0) >= 50:
@@ -104,6 +103,8 @@ def get_class(w_day_hour):
             cls += " hot"
         elif w_day_hour.get("sens_termica", 0) <= 16:
             cls += " cold"
+        if w_day_hour.get("estado_cielo_des", None):
+            cls += " "+normalize(w_day_hour["estado_cielo_des"])
     if len(cls) > 1:
         cls = "weather " + cls
     return cls.strip()
@@ -145,6 +146,7 @@ def build_times(free, set_weather=False):
                 "weather": w_day_hour,
                 "rooms": hours.count(h),
                 "class": get_class(w_day_hour),
+                "cielo": w_day_hour.get("estado_cielo_des", None) if w_day_hour else None,
                 "width": width
             })
             max_width = max(width, max_width)
