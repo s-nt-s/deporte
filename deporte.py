@@ -70,7 +70,7 @@ def get_paul():
 
 def get_mina():
     p = Portal(
-        "https://deportesweb.madrid.es/deportesWeb/Login", adapter=DESAdapter())
+        "https://deportesweb.madrid.es/deportesWeb/Login")#, adapter=DESAdapter())
     p.operacion('01010000')
     p.centro(17)
     p.actividad(64)

@@ -56,19 +56,19 @@ ul.happy > li::before {
 }
 
 
-li.wind::after {
+li.wind span.cielo::after {
 	content: "\1F300";
-	margin: 0 0.5em;
+	margin-left: 1.5em;
 }
 
-li.soft_rain::after {
+li.soft_rain span.cielo::after {
 	content: "\2602";
-	margin: 0 0.5em;
+	margin-left: 1.5em;
 }
 
-li.heavy_rain::after {
+li.heavy_rain span.cielo::after {
 	content: "\26C8";
-	margin: 0 0.5em;
+    margin-left: 1.5em;
 }
 
 ul.h2 > li.h1 {
@@ -89,11 +89,9 @@ span.cielo {
     display: inline-block;
     width: 1em;
     height: 1em;
-/*    vertical-align: top;
-*/    float: right;
     margin-left: 0.5em;
-  position: absolute;
-  left: 100%;
+    position: absolute;
+    left: 100%;
 }
 body > ul {
     display: inline-block;
