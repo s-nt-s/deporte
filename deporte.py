@@ -6,7 +6,7 @@ import locale
 import os
 import xml.etree.ElementTree as etree
 from datetime import date, datetime
-from ftplib import FTP
+from ftplib import FTP, error_perm
 
 import requests
 from jinja2 import Environment, FileSystemLoader
@@ -15,6 +15,9 @@ import holidays
 from api import DESAdapter, Portal, normalize
 from crontab import CronTab
 from weather import WeatherMadrid
+
+import urllib3
+urllib3.disable_warnings()
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
@@ -198,12 +201,17 @@ html = out.render(data={
 with open(out_file, "wb") as fh:
     fh.write(bytes(html, 'UTF-8'))
 
-
-ftp_con = open(".ig_ftp").read().strip()
-host, user, passwd, path = ftp_con.split(" ")
-ftp = FTP(host)
-ftp.login(user=user, passwd=passwd)
-ftp.cwd(path)
-with open(out_file, 'rb') as fh:
-    ftp.storbinary('STOR ' + os.path.basename(out_file), fh)
-ftp.quit()
+if os.path.isfile(".ig_ftp"):
+    ftp_con = open(".ig_ftp").read().strip()
+    host, user, passwd, path = ftp_con.split(" ")
+    try:
+        ftp = FTP(host)
+        ftp.login(user=user, passwd=passwd)
+        ftp.cwd(path)
+        with open(out_file, 'rb') as fh:
+            ftp.storbinary('STOR ' + os.path.basename(out_file), fh)
+        ftp.quit()
+    except error_perm as e:
+        code = e.args[0].split(" ")[0]
+        if not code.isdigit() or int(code) not in (530, 500, 421):
+            raise
