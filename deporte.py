@@ -38,9 +38,9 @@ holi = holidays.ES(prov="MAD", years=now.year)
 weather = WeatherMadrid()
 out_file = "out/index.html"
 
-def get_user_passwd(f):
-    if f in os.environ:
-        userpass = os.environ[f]
+def get_user_passwd(var, f):
+    if var in os.environ:
+        userpass = os.environ[var]
     else:
         userpass = open(f).read().strip()
     return userpass.split(" ")
@@ -66,7 +66,7 @@ def to_hh_mm(time):
 
 
 def get_paul():
-    user, password = get_user_passwd(".ig_madrid.org")
+    user, password = get_user_passwd("MADRID_ORG", ".ig_madrid.org")
     p = Portal("https://gestiona.madrid.org/cronosweb",
                user=user, password=password)
     p.operacion('01010000')
