@@ -38,6 +38,12 @@ holi = holidays.ES(prov="MAD", years=now.year)
 weather = WeatherMadrid()
 out_file = "out/index.html"
 
+def get_user_passwd(f):
+    if f in os.environ:
+        userpass = os.environ[f]
+    else:
+        userpass = open(f).read().strip()
+    return userpass.split(" ")
 
 def in_range(fch):
     dt = datetime.strptime(fch, '%Y-%m-%d %H:%M')
@@ -60,8 +66,7 @@ def to_hh_mm(time):
 
 
 def get_paul():
-    userpass = open(".ig_madrid.org").read().strip()
-    user, password = userpass.split(" ")
+    user, password = get_user_passwd(".ig_madrid.org")
     p = Portal("https://gestiona.madrid.org/cronosweb",
                user=user, password=password)
     p.operacion('01010000')
@@ -200,18 +205,3 @@ html = out.render(data={
 })
 with open(out_file, "wb") as fh:
     fh.write(bytes(html, 'UTF-8'))
-
-if os.path.isfile(".ig_ftp"):
-    ftp_con = open(".ig_ftp").read().strip()
-    host, user, passwd, path = ftp_con.split(" ")
-    try:
-        ftp = FTP(host)
-        ftp.login(user=user, passwd=passwd)
-        ftp.cwd(path)
-        with open(out_file, 'rb') as fh:
-            ftp.storbinary('STOR ' + os.path.basename(out_file), fh)
-        ftp.quit()
-    except error_perm as e:
-        code = e.args[0].split(" ")[0]
-        if not code.isdigit() or int(code) not in (530, 500, 421):
-            raise
