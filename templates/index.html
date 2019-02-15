@@ -9,7 +9,7 @@
         <script type="text/javascript" type="text/javascript">
         //<![CDATA[
             var last_run = '{{ data.now.strftime("%Y-%m-%d-%H-%M") }}';
-            var next_run = '{{ data.cron.next.strftime("%Y-%m-%d-%H-%M") if data.cron else 'null' }}';
+            var next_run = '{{ data.cron.next.strftime("%Y-%m-%d-%H-%M") if data.cron else "null" }}';
         //]]>
         </script>
         <script src="main.js" async="async" type="text/javascript"></script>
