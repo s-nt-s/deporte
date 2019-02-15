@@ -1,12 +1,7 @@
 import json
-import os
 import re
-import ssl
-import sys
-import time
 import unicodedata as uc
-from datetime import datetime
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urljoin
 
 import bs4
 import requests

@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
 import calendar
-import json
 import locale
 import os
-import xml.etree.ElementTree as etree
-from datetime import date, datetime
-from ftplib import FTP, error_perm
+from datetime import datetime
 
 import requests
 from jinja2 import Environment, FileSystemLoader
@@ -38,12 +35,14 @@ holi = holidays.ES(prov="MAD", years=now.year)
 weather = WeatherMadrid()
 out_file = "out/index.html"
 
+
 def get_user_passwd(var, f):
     if var in os.environ:
         userpass = os.environ[var]
     else:
         userpass = open(f).read().strip()
     return userpass.split(" ")
+
 
 def in_range(fch):
     dt = datetime.strptime(fch, '%Y-%m-%d %H:%M')
@@ -78,7 +77,7 @@ def get_paul():
 
 def get_mina():
     p = Portal(
-        "https://deportesweb.madrid.es/deportesWeb/Login")#, adapter=DESAdapter())
+        "https://deportesweb.madrid.es/deportesWeb/Login")  # , adapter=DESAdapter())
     p.operacion('01010000')
     p.centro(17)
     p.actividad(64)
@@ -194,9 +193,7 @@ paul = get_paul()
 mina = get_mina()
 
 j2_env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
-print(1111)
 out = j2_env.get_template('index.html')
-print(2222)
 
 html = out.render(data={
     "now": now,
