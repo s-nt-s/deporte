@@ -58,9 +58,11 @@
             Los datos meteorologicos son extraidos de la <a href='http://www.aemet.es/es/eltiempo/prediccion/municipios/madrid-id28079'>aemet</a><br/>
             (esto esta en pruebas, mejor revisar directamente la fuente).
         </p>
+        {% if data.cron %}
         <p>
             Esta página se regenera {{ data.cron.summary }}.<br/>
             La próxima ejecución será el {{ data.cron.next.strftime("%A %d a las %H:%M").replace(" 0", " ") }}.<br/>
         </p>
+        {% endif %}
 	</body>
 </html>

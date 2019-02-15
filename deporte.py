@@ -168,30 +168,36 @@ def build_times(free, set_weather=False):
 
 
 def get_cron():
-    cron = CronTab(user=True)
-    comments = []
-    next_run = None
-    for job in cron.find_command(abspath):
-        if job.is_enabled() and job.is_valid():
-            comments.append(job.comment.lower())
-            schedule = job.schedule(date_from=datetime.now())
-            dt = schedule.get_next()
-            if next_run is None or next_run > dt:
-                next_run = dt
-    summary = ", ".join(comments[:-1])
-    if len(comments) > 1:
-        summary += " y " + comments[-1]
-    r = {
-        "summary": summary,
-        "next": next_run
-    }
-    return r
+    try:
+        cron = CronTab(user=True)
+        comments = []
+        next_run = None
+        for job in cron.find_command(abspath):
+            if job.is_enabled() and job.is_valid():
+                comments.append(job.comment.lower())
+                schedule = job.schedule(date_from=datetime.now())
+                dt = schedule.get_next()
+                if next_run is None or next_run > dt:
+                    next_run = dt
+        summary = ", ".join(comments[:-1])
+        if len(comments) > 1:
+            summary += " y " + comments[-1]
+        r = {
+            "summary": summary,
+            "next": next_run
+        }
+        return r
+    except:
+        return None
 
 paul = get_paul()
 mina = get_mina()
 
 j2_env = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
+print(1111)
 out = j2_env.get_template('index.html')
+print(2222)
+
 html = out.render(data={
     "now": now,
     "mina": build_times(mina, set_weather=True),
