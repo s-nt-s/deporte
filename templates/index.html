@@ -9,7 +9,7 @@
         <script type="text/javascript" type="text/javascript">
         //<![CDATA[
             var last_run = '{{ data.now.strftime("%Y-%m-%d-%H-%M") }}';
-            var next_run = '{{ data.cron.next.strftime("%Y-%m-%d-%H-%M") if data.cron else "null" }}';
+            var next_run = '{{ data.cron.next.strftime("%Y-%m-%d-%H-%M") if data.cron and data.cron.next else "null" }}';
         //]]>
         </script>
         <script src="main.js" async="async" type="text/javascript"></script>
@@ -58,7 +58,7 @@
             Los datos meteorologicos son extraidos de la <a href='http://www.aemet.es/es/eltiempo/prediccion/municipios/madrid-id28079'>aemet</a><br/>
             (esto esta en pruebas, mejor revisar directamente la fuente).
         </p>
-        {% if data.cron %}
+        {% if data.cron and data.cron.next %}
         <p>
             Esta página se regenera {{ data.cron.summary }}.<br/>
             La próxima ejecución será el {{ data.cron.next.strftime("%A %d a las %H:%M").replace(" 0", " ") }}.<br/>
