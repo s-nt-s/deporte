@@ -3,6 +3,6 @@ holidays==0.8.1
 Jinja2==2.10
 python_crontab==2.3.6
 requests==2.12.4
-urllib3==1.19.1
+urllib3==1.24.2
 lxml==3.5.0
 MarkupSafe==1.1.0
